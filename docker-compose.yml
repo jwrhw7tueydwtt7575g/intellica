@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "4002:4002"
+    environment:
+      - MONGO_URI=mongodb://db:27017/intellica_data
+      - JWT_PASSWORD=vivekchaudhari1234@vivek.com
+      - FRONTEND_URL=http://localhost:5173
+      - PORT=4002
+      - GROQ_API_KEY=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
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+
+  db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

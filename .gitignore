@@ -1,0 +1,27 @@
+# Sensitive Files
+.env
+.env.*
+*.secret
+*.key
+k8s/05-secret.yaml
+
+# Dependencies
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+npm-debug.log*
+
+# Build Artifacts
+dist/
+coverage/
+build/
+.next/
+.nuxt/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE Files
+.vscode/
+.idea/

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: intellica
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: vivekchaudhari17/intellica_backend:latest
+        command: ["npm", "start"]
+        ports:
+        - containerPort: 4002
+        envFrom:
+        - secretRef:
+            name: intellica-secret
+        env:
+        - name: MONGO_URI
+          value: "mongodb://mongo-service:27017/intellica_data"
+        - name: FRONTEND_URL
+          value: "http://intellica.local"
+        - name: PORT
+          value: "4002"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  namespace: intellica
+spec:
+  selector:
+    app: backend
+  ports:
+    - protocol: TCP
+      port: 4002
+      targetPort: 4002
+  type: LoadBalancer

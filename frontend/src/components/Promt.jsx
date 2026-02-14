@@ -47,7 +47,7 @@ function Promt() {
       const token = localStorage.getItem("token");
 
       const { data } = await axios.post(
-        "http://localhost:4002/api/v1/deepseekai/promt",
+        "/api/v1/deepseekai/promt",
         { content: trimmed },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -103,9 +103,8 @@ function Promt() {
         {promt.map((msg, index) => (
           <div
             key={index}
-            className={`w-full flex ${
-              msg.role === "user" ? "justify-end" : "justify-start"
-            }`}
+            className={`w-full flex ${msg.role === "user" ? "justify-end" : "justify-start"
+              }`}
           >
             {msg.role === "assistant" ? (
               <div className="w-full bg-[#232323] text-white rounded-xl px-4 py-3 text-sm whitespace-pre-wrap">
